@@ -13,7 +13,7 @@ public class CameraMovement : MonoBehaviour
     void Start()
     {
         float center = gs.size * 100 / 2;
-        t.SetPositionAndRotation(new Vector3(center, 600, center - (600*Mathf.Tan(60 * Mathf.PI / 180))), new Quaternion(0, 0, 0, 0));
+        t.SetPositionAndRotation(new Vector3(center, 600, center - (600*Mathf.Tan(30 * Mathf.PI / 180))), new Quaternion(0, 0, 0, 0));
     }
 
     // Update is called once per frame
