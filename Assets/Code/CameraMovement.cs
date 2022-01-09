@@ -23,16 +23,16 @@ public class CameraMovement : MonoBehaviour
         
         //mouseVelocity = Input.mousePosition - lastMousePosition;
         
-        if (Input.GetKey(KeyCode.Mouse0))
+        if (Input.GetKey(KeyCode.Mouse0) && !Input.GetKey(KeyCode.LeftAlt))
         {
             Vector3 v3 = Input.mousePosition - lastMousePosition;
             t.Translate(new Vector3(-v3.x, -v3.z, -v3.y), Space.Self);
         }
 
-        if (Input.GetKey(KeyCode.Mouse0) && Input.GetKey(KeyCode.LeftControl))
+        if (Input.GetKey(KeyCode.Mouse0) && Input.GetKey(KeyCode.LeftAlt))
         {
             Vector3 v3 = Input.mousePosition - lastMousePosition;
-            t.Rotate(new Vector3(0, -v3.x, 0), Space.Self);
+            t.Rotate(new Vector3(0, v3.x, 0), Space.Self);
         }
 
         lastMousePosition = Input.mousePosition;
