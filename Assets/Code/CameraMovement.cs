@@ -8,6 +8,7 @@ public class CameraMovement : MonoBehaviour
     //public Vector3 mouseVelocity;
     public Rigidbody rb;
     public Transform t;
+    public Transform camara;
     public gridSpawner gs;
     // Start is called before the first frame update
     void Start()
@@ -25,9 +26,25 @@ public class CameraMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.Mouse0))
         {
             Vector3 v3 = Input.mousePosition - lastMousePosition;
-            t.Translate(new Vector3(-v3.x, -v3.z, -v3.y), Space.World);
+            t.Translate(new Vector3(-v3.x, -v3.z, -v3.y), Space.Self);
+        }
+
+        if (Input.GetKey(KeyCode.Mouse0) && Input.GetKey(KeyCode.LeftControl))
+        {
+            Vector3 v3 = Input.mousePosition - lastMousePosition;
+            t.Rotate(new Vector3(0, -v3.x, 0), Space.Self);
         }
 
         lastMousePosition = Input.mousePosition;
+
+        camara.Translate(new Vector3(0, -Input.mouseScrollDelta.y * 100, 0), Space.World);
+        if (camara.position.y > 600)
+        {
+            camara.SetPositionAndRotation(new Vector3(camara.position.x, 600, camara.position.z), camara.rotation);
+        }
+        if (camara.position.y < 200)
+        {
+            camara.SetPositionAndRotation(new Vector3(camara.position.x, 200, camara.position.z), camara.rotation);
+        }
     }
 }
