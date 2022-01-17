@@ -2,46 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Unity.Netcode;
 
 public class placeObject : MonoBehaviour
 {
 
     public GameObject blackBuilding, redBuilding, blueBuilding;
-    public bool black, red, blue;
 
     // Start is called before the first frame update
-    public void Place(int i)
+    public void Place(int building)
     {
-        black = false;
-        red = false;
-        blue = false;
-        
-        
-        if (i == 1)
-        {
-            black = true;
-        }
-        if (i == 2)
-        {
-            Instantiate(redBuilding, Input.mousePosition, new Quaternion(0, 0, 0, 0));
-        }
-        if (i == 3)
-        {
-            Instantiate(blueBuilding, Input.mousePosition, new Quaternion(0, 0, 0, 0));
-        }
-        Debug.Log(i.ToString());
-    }
+        GameObject go;
+        switch (building) {
+            case 1:
+                go = Instantiate(blackBuilding, new Vector3(Random.Range(0f, 1000f), 50f, Random.Range(0f, 1000f)), new Quaternion(0, 0, 0, 0));
+                go.GetComponent<NetworkObject>().Spawn();
+                break;
 
-    private void Update()
-    {
-        if (black)
-        {
-            if (Input.GetKeyDown(KeyCode.Mouse0))
-            {
-                Instantiate(blackBuilding, new Vector3(0, 5, 0), new Quaternion(0, 0, 0, 0));
-                black = false;
-            }
+            case 2:
+                go = Instantiate(redBuilding, new Vector3(Random.Range(0f, 1000f), 50f, Random.Range(0f, 1000f)), new Quaternion(0, 0, 0, 0));
+                go.GetComponent<NetworkObject>().Spawn();
+                break;
+
+            case 3:
+                go = Instantiate(blueBuilding, new Vector3(Random.Range(0f, 1000f), 50f, Random.Range(0f, 1000f)), new Quaternion(0, 0, 0, 0));
+                go.GetComponent<NetworkObject>().Spawn();
+                break;
         }
+        Debug.Log(building.ToString());
     }
 
 

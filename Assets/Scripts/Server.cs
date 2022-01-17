@@ -6,8 +6,21 @@ using Unity.Netcode;
 public class Server : MonoBehaviour
 {
 
+    private string ip = "127.0.0.1";
+
+    private void setup()
+    {
+        NetworkManager.Singleton.ConnectionApprovalCallback += PrintClient;
+    }
+
+    private void PrintClient(byte[] connectionData, ulong clientId, NetworkManager.ConnectionApprovedDelegate callback)
+    {
+        Debug.Log(clientId.ToString());
+    }
+
     void OnGUI()
     {
+        Debug.Log("On GUI");
         GUILayout.BeginArea(new Rect(10, 10, 300, 400));
         if (!NetworkManager.Singleton.IsClient && !NetworkManager.Singleton.IsServer)
         {
@@ -19,6 +32,10 @@ public class Server : MonoBehaviour
             SubmitNewPosition();
             Shutdown();
         }
+        GUILayout.EndArea();
+        GUILayout.BeginArea(new Rect(1500, 10, 300, 200));
+        IPEnter();
+        GUILayout.EndArea();
     }
 
     static void StartButtons()
@@ -53,6 +70,12 @@ public class Server : MonoBehaviour
                 player.Move();
             }
         }
+    }
+
+    void IPEnter()
+    {
+        ip = GUILayout.TextField(ip);
+        if (GUILayout.Button("Enter IP")) NetworkManager.Singleton.GetComponent<Unity.Netcode.Transports.UNET.UNetTransport>().ConnectAddress = ip;
     }
 
     static void Shutdown()
